@@ -1,0 +1,23 @@
+title KEDA,AKS,Azure Pipeline
+
+RG_AKS[icon: azure-resource-groups] {
+Azure Kubernetes Service (AKS) [icon: azure-kubernetes-services]
+Wkl01 [icon: k8s-kubernetes]
+}
+
+RG_ACR[icon: azure-resource-groups] {
+  Azure Container Registry [icon: azure-container-registries]
+}
+
+Azure DevOps  [icon: azure-devops]
+
+Microsoft Entra  [icon: azure-active-directory]
+
+User [icon: user-plus]
+
+
+
+
+Azure Kubernetes Service (AKS)  > Azure Container Registry:pull
+Azure Kubernetes Service (AKS)  > Azure DevOps:API Call 
+User > Azure Container Registry:push

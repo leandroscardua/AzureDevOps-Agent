@@ -1,0 +1,1 @@
+https://github.com/leandroscardua/AzureDevOps-Scripts/blob/main/pipeline/delete_offline_agents.ps1

@@ -1,0 +1,7 @@
+name: test
+namespace: test
+triggerAuthenticationName: test
+minReplicaCount: 1
+maxReplicaCount: 1
+poolName: test
+
