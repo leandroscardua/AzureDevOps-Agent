@@ -1,8 +1,8 @@
 resource "random_string" "name" {
   length  = 3
   special = false
-  upper = false
-} 
+  upper   = false
+}
 
 resource "azurerm_resource_group" "ado" {
   name     = local.rg_name
