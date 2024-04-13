@@ -39,3 +39,11 @@ resource "azurerm_role_assignment" "aks_admin_3" {
   depends_on = [azurerm_role_assignment.aks_admin_2]
 
 }
+
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
+  depends_on = [
+    azurerm_role_assignment.aks_admin_3,
+    azurerm_kubernetes_cluster_node_pool.workload
+  ]
+}

@@ -3,9 +3,7 @@ resource "kubernetes_namespace_v1" "namespace" {
     name = var.pool_name
   }
   depends_on = [
-    azurerm_role_assignment.aks_admin_3,
-    azurerm_kubernetes_cluster.aks,
-    azurerm_kubernetes_cluster_node_pool.workload
+    time_sleep.wait_60_seconds
   ]
 }
 
@@ -24,10 +22,10 @@ resource "kubernetes_secret_v1" "secrets" {
   }
 
   data = {
-    AZP_URL      = "https://dev.azure.com/${var.org_name}"
-    AZP_TOKEN    = var.ado_token
-    AZP_POOL     = var.pool_name
-    AZP_WORK     = "/mnt/work"
+    AZP_URL   = "https://dev.azure.com/${var.org_name}"
+    AZP_TOKEN = var.ado_token
+    AZP_POOL  = var.pool_name
+    AZP_WORK  = "/mnt/work"
   }
 }
 

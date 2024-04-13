@@ -1,3 +1,14 @@
+resource "random_string" "name" {
+  length  = 3
+  special = false
+  upper = false
+} 
+
+resource "azurerm_resource_group" "ado" {
+  name     = local.rg_name
+  location = var.location
+}
+
 resource "azurerm_kubernetes_cluster" "aks" {
   location            = azurerm_resource_group.ado.location
   name                = local.aks_name
