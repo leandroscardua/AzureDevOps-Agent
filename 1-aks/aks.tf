@@ -71,6 +71,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "workload" {
   vm_size               = var.vm_size
   node_count            = var.node_count
   os_sku                = var.os_sku
+  enable_auto_scaling   = var.enable_auto_scaling
+  min_count             = var.min_count
+  max_count             = var.max_count
 
   node_labels = local.labels
 

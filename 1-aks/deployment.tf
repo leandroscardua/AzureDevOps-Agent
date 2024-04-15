@@ -108,12 +108,12 @@ resource "helm_release" "ScaledObject" {
 
   set {
     name  = "minReplicaCount"
-    value = "1"
+    value = var.minReplicaCount
   }
 
   set {
     name  = "maxReplicaCount"
-    value = "5"
+    value = var.maxReplicaCount
   }
 
   set {

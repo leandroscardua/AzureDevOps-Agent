@@ -86,8 +86,20 @@ variable "ado_token" {
 
 variable "replicas" {
   type        = number
-  description = "Number of replicas"
+  description = "Number of replicas for keep-alive deployment"
   default     = 1
+}
+
+variable "minReplicaCount" {
+  type        = number
+  default     = 1
+  description = "Min Number of replicas for ScaledObject"
+}
+
+variable "maxReplicaCount" {
+  type        = number
+  default     = 5
+  description = "Min Number of replicas for ScaledObject"
 }
 
 variable "requests" {
@@ -107,3 +119,20 @@ variable "disk_space_limit" {
   default = "4Gi"
 }
 
+
+variable "enable_auto_scaling" {
+  default     = true
+  description = "Enable Cluster autoscaler"
+}
+
+variable "min_count" {
+  type        = number
+  description = "Min of nodes"
+  default     = 1
+}
+
+variable "max_count" {
+  type        = number
+  description = "Max of nodes"
+  default     = 2
+}
