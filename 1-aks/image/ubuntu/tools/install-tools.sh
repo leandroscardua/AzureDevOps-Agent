@@ -17,10 +17,10 @@ pwsh_version=7.4
 apt install -y powershell=$pwsh_version*
 
 # # Install Terraform
-# download_url=$(curl -fsSL https://api.releases.hashicorp.com/v1/releases/terraform/latest | jq -r '.builds[] | select((.arch=="amd64") and (.os=="linux")).url')
-# curl -O $download_url
-# unzip terraform_*.zip -d /usr/local/bin
-# rm terraform_*.zip
+download_url=$(curl -fsSL https://api.releases.hashicorp.com/v1/releases/terraform/latest | jq -r '.builds[] | select((.arch=="amd64") and (.os=="linux")).url')
+curl -O $download_url
+unzip terraform_*.zip -d /usr/local/bin
+rm terraform_*.zip
 
 # Install Azure CLI (instructions taken from https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 curl -fsSL https://aka.ms/InstallAzureCLIDeb | bash
@@ -30,11 +30,14 @@ rm -f /etc/apt/sources.list.d/azure-cli.list.save
 
 # # AZURE_EXTENSION_DIR shell variable defines where modules are installed
 # # https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview
-# export AZURE_EXTENSION_DIR=/opt/az/azcliextensions
-# set_etc_environment_variable "AZURE_EXTENSION_DIR" "${AZURE_EXTENSION_DIR}"
+exec bash
+export AZURE_EXTENSION_DIR=/opt/az/azcliextensions
 
 # # install azure devops Cli extension
-# az extension add -n azure-devops
+if ! az extension add -n azure-devops; then
+    echo "Failed to add Azure DevOps extension."
+    exit 1
+fi
 
 
 # clears out the local repository of retrieved package files

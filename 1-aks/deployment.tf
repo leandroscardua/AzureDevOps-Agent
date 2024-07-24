@@ -1,6 +1,7 @@
 resource "kubernetes_namespace_v1" "namespace" {
   metadata {
-    name = var.pool_name
+    name   = var.pool_name
+    labels = local.app_labels
   }
   depends_on = [
     time_sleep.wait_60_seconds
@@ -11,6 +12,7 @@ resource "kubernetes_service_account_v1" "service_account" {
   metadata {
     name      = var.pool_name
     namespace = kubernetes_namespace_v1.namespace.metadata[0].name
+    labels    = local.app_labels
   }
 }
 
@@ -19,6 +21,7 @@ resource "kubernetes_secret_v1" "secrets" {
   metadata {
     name      = var.pool_name
     namespace = kubernetes_namespace_v1.namespace.metadata[0].name
+    labels    = local.app_labels
   }
 
   data = {
@@ -33,21 +36,22 @@ resource "kubernetes_deployment_v1" "ado_agent" {
   metadata {
     name      = var.pool_name
     namespace = kubernetes_namespace_v1.namespace.metadata[0].name
+    labels    = local.app_labels
   }
 
   spec {
     replicas = var.replicas
     selector {
-      match_labels = local.labels
+      match_labels = local.app_labels
     }
 
     template {
       metadata {
-        labels = local.labels
+        labels = local.app_labels
       }
 
       spec {
-        node_selector        = local.labels
+        node_selector        = local.app_labels
         service_account_name = kubernetes_service_account_v1.service_account.metadata[0].name
         container {
           name  = var.pool_name
@@ -78,6 +82,22 @@ resource "kubernetes_deployment_v1" "ado_agent" {
         }
       }
     }
+  }
+}
+
+resource "kubernetes_network_policy" "deny_all_ingress" {
+  metadata {
+    name      = "deny-all-ingress"
+    namespace = kubernetes_service_account_v1.service_account.metadata[0].name
+  }
+
+  spec {
+    pod_selector {
+      match_labels = local.app_labels
+    }
+
+    policy_types = ["Ingress"]
+
   }
 }
 
@@ -123,3 +143,4 @@ resource "helm_release" "ScaledObject" {
 
   depends_on = [helm_release.keda]
 }
+

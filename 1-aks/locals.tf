@@ -16,8 +16,12 @@ locals {
     source      = "terraform"
   }
 
-  labels = {
-    "nodepool" = "${var.pool_name}"
+  # labels = {
+  #   "nodepool" = "ado-agent"
+  # }
+
+  app_labels = {
+    "app" = "ado-agent"
   }
 
 

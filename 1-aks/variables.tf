@@ -18,7 +18,7 @@ variable "environment" {
 
 variable "location" {
   type        = string
-  default     = "westeurope"
+  default     = "northeurope"
   description = "Location of the resource group."
 }
 
@@ -32,7 +32,7 @@ variable "vm_size" {
 variable "node_count" {
   type        = number
   description = "Default quantity of nodes for the node pool."
-  default     = 2
+  default     = 1
 }
 
 variable "os_sku" {
