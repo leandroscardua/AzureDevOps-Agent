@@ -12,8 +12,6 @@ spec:
   triggers:
   - type: azure-pipelines
     metadata:
-      activationTargetPipelinesQueueLength: "20"
       organizationURLFromEnv: AZP_URL
       personalAccessTokenFromEnv: AZP_TOKEN
-      poolName: {{ .Values.poolName }}
-      targetPipelinesQueueLength: "1"
+      poolName: AZP_POOL

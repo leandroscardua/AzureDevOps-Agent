@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{ .Values.tags }}
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{ .Values.tags }}
+  template:
+    metadata:
+      labels:
+        {{ .Values.tags }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - env:
+        - name: AZP_URL
+          value: {{ .Values.orgName}}
+        - name: AZP_POOL
+          value: {{ .Values.poolName}}
+        - name: AZP_WORK
+          value: /mnt/work
+        envFrom:
+        - secretRef:
+            name: {{ .Values.name }}
+            optional: false
+        image: {{ .Values.image }}
+        name: {{ .Values.name }}
+        resources:
+          limits:
+            cpu: {{ .Values.limits.cpu }}
+            memory: {{ .Values.limits.memory }}
+          requests:
+            cpu: {{ .Values.requests.cpu }}
+            memory: {{ .Values.requests.memory }}
+        volumeMounts:
+        - mountPath: /mnt/work
+          mountPropagation: None
+          name: temp-data
+      enableServiceLinks: true
+      nodeSelector:
+        {{ .Values.tags }}
+      serviceAccount: {{ .Values.name }}
+      serviceAccountName: {{ .Values.name }}
+      shareProcessNamespace: false
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir:
+          sizeLimit: {{ .Values.disk_space_limit }}
+        name: temp-data

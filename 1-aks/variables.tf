@@ -18,16 +18,21 @@ variable "environment" {
 
 variable "location" {
   type        = string
-  default     = "northeurope"
+  default     = "uksouth"
   description = "Location of the resource group."
 }
 
 variable "vm_size" {
   type        = string
   description = "Default size of the VMSS"
-  default     = "Standard_B2as_v2"
+  default     = "Standard_D4s_v3"
 }
 
+variable "node_pool_priority" {
+  type        = string
+  description = "Default sku of nodes for the node pool."
+  default     = "Spot"
+}
 
 variable "node_count" {
   type        = number
@@ -111,6 +116,7 @@ variable "requests" {
 
 variable "limits" {
   default = {
+    cpu    = "1000m"
     memory = "2Gi"
   }
 }

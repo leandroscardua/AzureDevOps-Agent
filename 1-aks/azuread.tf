@@ -5,7 +5,7 @@ data "azuread_client_config" "current" {}
 data "azurerm_subscription" "primary" {}
 
 resource "azuread_group" "aks_admin" {
-  display_name     = "aks-cluster-administrators"
+  display_name     = "cluster-administrators-${local.aks_name}"
   description      = "Azure AKS Kubernetes administrators for the"
   security_enabled = true
 
@@ -44,6 +44,6 @@ resource "time_sleep" "wait_60_seconds" {
   create_duration = "60s"
   depends_on = [
     azurerm_role_assignment.aks_admin_3,
-    azurerm_kubernetes_cluster_node_pool.workload
+    azurerm_kubernetes_cluster_node_pool.app_pool
   ]
 }

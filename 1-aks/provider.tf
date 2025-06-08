@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azapi = {
       source  = "azure/azapi"
-      version = "1.13.1"
+      version = "1.15.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -12,19 +12,19 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "2.53.0"
+      version = "2.53.1"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "2.14.0"
+      version = "2.15.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.31.0"
+      version = "2.32.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "3.6.2"
+      version = "3.6.3"
     }
   }
 }
@@ -34,8 +34,8 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
-  host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
-  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+  host                   = azurerm_kubernetes_cluster.ado.kube_config.0.host
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.ado.kube_config.0.cluster_ca_certificate)
 
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
@@ -57,8 +57,8 @@ provider "kubernetes" {
 
 provider "helm" {
   kubernetes {
-    host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
-    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+    host                   = azurerm_kubernetes_cluster.ado.kube_config.0.host
+    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.ado.kube_config.0.cluster_ca_certificate)
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "kubelogin"

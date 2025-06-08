@@ -1,0 +1,15 @@
+apiVersion: v1
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: deny-all-ingress
+    namespace: {{ .Values.namespace }}
+  spec:
+    podSelector:
+      matchLabels:
+        {{ .Values.tags }}
+    policyTypes:
+    - Ingress
+kind: List
+metadata: {}

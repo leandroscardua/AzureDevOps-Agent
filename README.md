@@ -27,4 +27,4 @@ terraform init
 
 terraform plan -var="ado_token=<coloca token aqui>" -var="org_name=<nome da organizacao>" -var="pool_name=<nome do pool agent>"
 
-terraform apply -auto-approve -var="org_name=<nome da organizacao>" -var="org_name=<nome da organizacao>" -var="pool_name=<nome do pool agent>"
+terraform apply -auto-approve -var="ado_token=<coloca token aqui>" -var="org_name=<nome da organizacao>" -var="pool_name=<nome do pool agent>"
